@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 // final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
+
   @override
   State<NewExpense> createState() {
     return _NewExpense();
@@ -61,6 +65,12 @@ class _NewExpense extends State<NewExpense> {
       );
       return;
     }
+
+    widget.onAddExpense(Expense(
+        title: _titleController.text,
+        amount: entredAmount,
+        date: _selectedDate!,
+        category: _selectedCategory));
   }
 
   @override

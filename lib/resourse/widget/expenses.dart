@@ -15,28 +15,55 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registredExpense = [
     Expense(
-        title: "Food",
+        title: "Pizza Hut",
         amount: 100,
         date: DateTime.now(),
         category: Category.food),
     Expense(
-        title: "Dinner",
-        amount: 100,
+        title: "Dinner with family",
+        amount: 1000,
         date: DateTime.now(),
         category: Category.food),
     Expense(
-        title: "Brakfast",
+        title: "Star Cineplex",
         amount: 100,
         date: DateTime.now(),
-        category: Category.work),
+        category: Category.leisure),
   ];
 
-  void _openAddExpenseOverlay() {
+  /* void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(
         onAddExpense: _addExpense,
       ),
+    );
+  } */
+  void _openAddExpenseOverlay() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) {
+        return DraggableScrollableSheet(
+          expand: false,
+          builder: (_, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context)
+                      .viewInsets
+                      .bottom, // Adjust for keyboard
+                ),
+                child: NewExpense(
+                  onAddExpense: _addExpense,
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 

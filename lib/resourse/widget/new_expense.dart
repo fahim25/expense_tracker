@@ -16,10 +16,14 @@ class _NewExpense extends State<NewExpense> {
 
 //better version
   final _titleController = TextEditingController();
+  final _acmountController = TextEditingController();
+  final _dateController = TextEditingController();
 
   @override
   void dispose() {
     _titleController.dispose();
+    _acmountController.dispose();
+    _dateController.dispose();
     super.dispose();
   }
 
@@ -38,6 +42,14 @@ class _NewExpense extends State<NewExpense> {
               label: Text('Title'),
             ),
           ),
+          TextField(
+            controller: _acmountController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              prefixText: '\$ ',
+              label: Text('Amount'),
+            ),
+          ),
           Row(
             children: [
               ElevatedButton(
@@ -45,6 +57,15 @@ class _NewExpense extends State<NewExpense> {
                   print(_titleController.text);
                 },
                 child: Text("Save"),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Cancle"),
               ),
             ],
           ),

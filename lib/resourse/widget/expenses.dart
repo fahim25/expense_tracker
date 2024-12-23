@@ -79,6 +79,7 @@ class _ExpensesState extends State<Expenses> {
     setState(() {
       _registredExpense.remove(expense);
     });
+    ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: Duration(seconds: 2),
@@ -101,7 +102,7 @@ class _ExpensesState extends State<Expenses> {
       child: Text('No Expenses found! Start adding some.'),
     );
 
-    if (!_registredExpense.isEmpty) {
+    if (_registredExpense.isNotEmpty) {
       mainContent = ExpensesList(
         expenses: _registredExpense,
         onRemoveExpense: _removeExpense,

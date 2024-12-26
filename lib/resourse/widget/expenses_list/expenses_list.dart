@@ -2,6 +2,7 @@ import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/resourse/widget/expenses_list/expense_item.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ExpensesList extends StatelessWidget {
   ExpensesList({
     super.key,

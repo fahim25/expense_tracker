@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:expense_tracker/models/expense.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 
@@ -38,14 +41,26 @@ class _NewExpense extends State<NewExpense> {
     });
   }
 
-  void _submitBtn() {
-    final entredAmount = double.tryParse(_amountController.text);
-
-    final isAmountInvalid = entredAmount == null || entredAmount <= 0;
-
-    if (_titleController.text.trim().isEmpty ||
-        isAmountInvalid ||
-        _selectedDate == null) {
+  void _showDialog() {
+    if (Platform.isIOS) {
+      showCupertinoDialog(
+        context: context,
+        builder: (ctx) => CupertinoAlertDialog(
+          title: Text('Invalid Input'),
+          content: const Text(
+            'Please make sure a valid Title, Amount and Date is entred.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -63,6 +78,18 @@ class _NewExpense extends State<NewExpense> {
           ],
         ),
       );
+    }
+  }
+
+  void _submitBtn() {
+    final entredAmount = double.tryParse(_amountController.text);
+
+    final isAmountInvalid = entredAmount == null || entredAmount <= 0;
+
+    if (_titleController.text.trim().isEmpty ||
+        isAmountInvalid ||
+        _selectedDate == null) {
+      _showDialog();
       return;
     }
 
